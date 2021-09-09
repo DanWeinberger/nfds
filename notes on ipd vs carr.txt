@@ -1,0 +1,35 @@
+notes:
+  e_l is target locus frequency (length of L), based on pre-vax frequency of l
+
+K is a L*C matrix of frequency of locus l in clone C
+x %*% K 
+
+Model: e_l = x1*K1 + x2*K2 +X3*K3 ...
+
+x1,x2,x3... gives carriage prevalence of each clone post-PCV
+sum(x_c) =1
+
+and expected IPD incidence is given by
+x1*inv1 +x2*inv2 +x3*inv3...
+
+
+How is e_l calculated from the pre-vaccine data?
+  There is a 0/1 matrix of dimensions L*N for N isolates, L loci, and we take the mean of the row (prevalence)
+ e_l = frequency(locus L)
+     = frequency(Locus L in clone C1)*prevalence(Clone C1) + frequency(Locus L in clone C2)*prevalence(Clone C2)
+ 
+ for IPD data
+  e_l_IPD= frequency(Locus L in clone C1)*[freq_carr(Clone C1)*invasiveness(clone C1)]
+
+to get CARRIAGE distribution of loci from ipd data:
+ if we want e_l_carr = frequency(Locus L in clone C1) * freq_ipd(Clone C1)/inv(clone C1)
+
+then we would be optimizing
+e_l_carr = X1*freq_ipd(Clone C1)/inv(clone C1) + X2*freq_ipd(Clone C2)/inv(clone C2)...
+
+and expected IPD incidence is given by
+x1*inv1 +x2*inv2 +x3*inv3...
+
+QUESTION: can we skip the invasiveness calculations and just use IPD data?
+
+

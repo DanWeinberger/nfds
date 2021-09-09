@@ -1,0 +1,51 @@
+---
+title: "Playing Azarian et al."
+output: html_notebook
+---
+
+```{r}
+library(reshape2)
+```
+
+```{r}
+# d1<-read.csv('./Data/azarian plos pathogens.csv')
+# d1$count=1
+#  pcv7sts<-c('4','6B','9V','14','18C','19F','23F')
+#  pcv13sts<-c('1','3','5','6A','7F','19A')
+#  
+#  #Want an array with A rows and B columns, where B is the number of genetic groupings and A is serotype, dimension C is time period
+#  
+#  d1<-d1[,c('Epoch1','Sero',"BAPS1"  ,'count')]
+#  d1.m<-melt(d1, id.vars=c('Epoch1','Sero',"BAPS1"  ))
+#  d1.c<-acast(d1.m, Sero~BAPS1~Epoch1, fun.aggregate = sum)
+```
+
+```{r}
+#ds <- read.csv('https://raw.githubusercontent.com/c2-d2/Projects/master/NFDS/data_southwestUS.csv')
+#write.csv(ds,'./Data/azarian_navajo.csv')
+d1 <- read.csv('./Data/azarian_navajo.csv')
+```
+
+
+
+```{r}
+pcv7st.ind<- which(dimnames(d1.c)[[1]] %in% pcv7sts)
+pcv13st.ind<- which(dimnames(d1.c)[[1]] %in% c(pcv7sts, pcv13sts))
+pre.prev<- rowSums(d1.c[,,1])
+pre.vax.freq.cc<-colSums(d1.c[,,1], na.rm=TRUE)  #Frequency of the CC  pre-vaccine for all serotypes
+pre.vax.freq.cc.non.pcv7<-colSums(d1.c[-pcv7st.ind,,1], na.rm=TRUE) 
+pre.vax.freq.cc.non.pcv13<- colSums(d1.c[-pcv13st.ind,,1], na.rm=TRUE) 
+
+size.of.hole.pcv7<-pre.vax.freq.cc-pre.vax.freq.cc.non.pcv7 #e_l-f_l
+grp.dummy<-d1.c[,,1]
+grp.dummy[grp.dummy>0]<-1
+fitness_i<-as.matrix(grp.dummy) %*% matrix(size.of.hole.pcv7, ncol=1)
+names(fitness_i)<-row.names(grp.dummy)
+#sort(fitness_i[-pcv7st.ind])
+ave.fitness<- sum(fitness_i*pre.prev)
+
+dx_dt<-  pre.prev* (fitness_i-ave.fitness)
+names(dx_dt)<-row.names(grp.dummy)
+sort(dx_dt[-pcv7st.ind])
+```
+
