@@ -18,6 +18,8 @@ plotNF <- function(nf.out.obj){
   preds.nvt$rescale.pre <- preds.nvt$obs.pre.prev/sum(preds.nvt$obs.pre.prev, na.rm=T)
   yrange2 <-range(c( preds.nvt$rescale.pre, preds.nvt$preds.nvt,preds2$pred.prev.post,preds2$obs.post.prev2,preds2$pred.prev.post))
   
+  preds2$resid <- preds2$obs.post.prev2/preds2$pred.prev.post
+  
   par(mfrow=c(1,1))
   p1 <- ggplot(preds2, aes(pred.prev.post, obs.post.prev2, label = st)) +
      geom_text() +
@@ -49,6 +51,6 @@ plotNF <- function(nf.out.obj){
   
   compare.cors <- c(nfds.corr1,simple.corr)
   names(compare.cors) <- c('NFDS','Simple Expanasion')
-  out.obj=list ('correlations'=compare.cors, 'ObsExpPlot'=p1,'PrePost'=p2)
+  out.obj=list ('correlations'=compare.cors, 'ObsExpPlot'=p1,'PrePost'=p2, 'resid'=preds2[,c('st','resid')])
   
 }
