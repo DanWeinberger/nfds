@@ -35,7 +35,7 @@ g2 <- cbind.data.frame(st, strain.name, G)
 g2$strain.name <-gsub('_0','',g2$strain.name)
 
 #Meta data from croucher's original Nat Gen study
-x1a <- read_excel("C:/Users/dmw63/Desktop/My documents h/LAB/pneumo metabolic genes/NIHMS474991-supplement-2.xlsx")
+x1a <- read_excel("./Data/NIHMS474991-supplement-2.xlsx")
 x1b <-read_excel('./Data/gladstone gps.xlsx', sheet='T2-GPSC assignment dataset')
 x1c <- x1b[x1b$Study=="Croucher et al",]
 x1c <- x1c[, c('Taxon','GPSC', 'ERR')]
