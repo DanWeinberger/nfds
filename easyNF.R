@@ -11,7 +11,7 @@ easyNF <- function(nf.obj    ){
   
   sample.GPSCs=nf.obj$sample.GPSCs
   sample.serotypes=nf.obj$sample.serotypes
-  #sample.serotypes.gpsc <- paste(sample.serotypes, sample.GPSCs, sep='_')
+  #sample.GPSCs <- paste(sample.serotypes, sample.GPSCs, sep='_')
   gene.mat=nf.obj$gene.mat
   pcvsts=nf.obj$set.vts
   irr=nf.obj$set.rr

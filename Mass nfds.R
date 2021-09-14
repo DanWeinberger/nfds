@@ -71,8 +71,8 @@ test1 <-df[df$gpsc==1,]
 table(test1$gpsc, test1$st)
 
 nf.obj <- list('sample.GPSCs'=sample.SC,'sample.serotypes'=sample.serotypes,'gene.mat'=gene.mat, 'set.vts'=set.vts,'set.rr'=set.rr, 'post.serotypes'=serotypes.post, country='US_MA')
-
 #Run model
+
 preds <- easyNF(nf.obj)
 
 #Generate plots of observed and expected and calculate correlation for NVTs

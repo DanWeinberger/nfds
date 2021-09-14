@@ -45,9 +45,9 @@ plotNF <- function(nf.out.obj){
   
   #Spearman Correlation for NVTs 
   #print('NFDS')
-  nfds.corr1 <- cor(preds2$obs.post.prev2[plot.nvt],preds2$pred.prev.post[plot.nvt], method='pearson')
+  nfds.corr1 <- cor(preds2$obs.post.prev2[plot.nvt],preds2$pred.prev.post[plot.nvt], method='spearman')
   #print('Simple expansion')
-  simple.corr <- cor(preds2$obs.post.prev2[plot.nvt],preds2$obs.pre.prev[plot.nvt], method='pearson')
+  simple.corr <- cor(preds2$obs.post.prev2[plot.nvt],preds2$obs.pre.prev[plot.nvt], method='spearman')
   
   compare.cors <- c(nfds.corr1,simple.corr)
   names(compare.cors) <- c('NFDS','Simple Expanasion')
