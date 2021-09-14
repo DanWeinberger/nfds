@@ -5,7 +5,9 @@ library(glmnet)
 library(stringr)
 library(readxl)
 library(quadprog)
-source('easyNF_migration.R')
+#source('easyNF_migration.R')
+source('easyNF.R')
+
 source('plotNF.R')
 #install.packages('fastDummies')
 #install.packages("glmnet")
@@ -13,6 +15,7 @@ source('plotNF.R')
 #https://figshare.com/projects/Gladstone_et_al_MGEN_2019/69173
 #freq of cloud genes, etc https://figshare.com/articles/dataset/Roary_count_of_core_and_accessory_genes_of_the_whole_collection/11357828
 d1<-read.csv('./Data/gene_presence_absence_minimised.csv')
+
 d1.gene.annotations <- d1[,1:3]
 saveRDS(d1.gene.annotations,'./Data/cog_annotations.rds')
 # d1[,-c(1:14)] <- apply(d1[,-c(1:14)] ,1,function(x){

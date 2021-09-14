@@ -5,7 +5,7 @@ library(glmnet)
 library(stringr)
 library(readxl)
 library(quadprog)
-source('easyNF_migration.R')
+source('easyNF.R')
 source('plotNF.R')
 #install.packages('fastDummies')
 #install.packages("glmnet")
@@ -65,17 +65,20 @@ d4.israel.pre.IPD <- d4[d4$Country.x=='Israel' & d4$`Clinical Manifest`== "Disea
 ##################
 country="The Gambia"
 G <- d4[,grep('gene',names(d4))]
-gene.mat <- as.matrix(G[d4$Country.x==country & d4$`Clinical Manifest`=='Carriage' & d4$Vaccine_Period=='Pre-PCV',])
-gene.mat[is.na(gene.mat)] <- 0
+G <- G[,-which(names(gene.mat)=='geneid2')]
+gene.mat <- G[d4$Country.x==country & d4$`Clinical Manifest`=='Carriage' & d4$Vaccine_Period=='Pre-PCV',]
+gene.mat <- apply(gene.mat, 2, function(x){ x[is.na(x)] <-0 
+return(as.numeric(as.character(x)))
+})
 
 sample.serotypes <- d4$In_Silico_Serotype[d4$Country.x==country & d4$`Clinical Manifest`=='Carriage' & d4$Vaccine_Period=='Pre-PCV']
 sample.GPSCs <- d4$GPSC[d4$Country.x==country & d4$`Clinical Manifest`=='Carriage' & d4$Vaccine_Period=='Pre-PCV']
 
 serotypes.period2 <-d4$In_Silico_Serotype[d4$Country.x==country & d4$`Clinical Manifest`=='Carriage' & d4$Vaccine_Period=='Post-PCV7']
 set.vts <- c('4','6A','6B','9V','14','18C','19F','23F')
-set.rr <-0.5
+set.rr <-0.2
 
-nf.obj <- list('sample.GPSCs'=sample.GPSCs,'sample.serotypes'=sample.serotypes,'gene.mat'=gene.mat, 'set.vts'=set.vts,'set.rr'=set.rr, 'post.serotypes'=serotypes.period2, country='The Gambia')
+nf.obj <- list('sample.GPSCs'=sample.GPSCs,'sample.serotypes'=sample.serotypes,'gene.mat'=gene.mat, 'set.vts'=set.vts,'set.rr'=set.rr, 'post.serotypes'=serotypes.period2, 'country'='The Gambia')
 
 #Run model
 preds <- easyNF(nf.obj)
