@@ -32,12 +32,16 @@ gps <-  read_excel('./Data/gladstone gps.xlsx', sheet='T21-HierBAPS')
 gps <- gps[,c("GPSC...2","HierBAPs")]
 names(gps) <-c('GPSC', 'BAPS1')
 
+cogs <- readRDS('./Data/cog_annotations.rds')
+
+
+
 gps <- unique(gps)
 
 #d1 <- merge(d1, gps, by='BAPS1',all.x=T)
 d1 <- d1[!is.na(d1$BAPS2),]
 
-G <- d1[, grep('HMPREF', names(d1))]
+G <- d1[, 12:ncol(d1)]
 freq.gene <- colMeans(G) #already seems to be filtered for intermediate-freq locui
 
 names(G) <- paste0('gene', 1:ncol(G))
