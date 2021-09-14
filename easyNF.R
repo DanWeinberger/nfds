@@ -22,6 +22,8 @@ easyNF <- function(nf.obj    ){
   pcvst.ind<- as.numeric(sample.serotypes %in% pcvsts)
   nvt.ind <- 1-pcvst.ind
   
+  gene.mat <- as.numeric(as.character(gene.mat))
+  
   #1. we have a 'target', which is the frequency of each gene pre-PCV. This is'e_l'
   e_l <- apply(gene.mat, 2,mean, na.rm=T)
   

@@ -41,6 +41,8 @@ x1a <- read_excel("./Data/NIHMS474991-supplement-2.xlsx")
 x1b <-read_excel('./Data/gladstone gps.xlsx', sheet='T2-GPSC assignment dataset')
 x1c <- x1b[x1b$Study=="Croucher et al",]
 x1c <- x1c[, c('Taxon','GPSC', 'ERR')]
+
+gen1 <- readRDS('./Data/int_freq_GPS.rds')
 x1a$Serotype <- NULL
 x2 <- merge(x1a, g2, by.x='Taxon ID', by.y='strain.name')
 x2 <- merge(x2, x1c, by.x='Accession', by.y='ERR')
