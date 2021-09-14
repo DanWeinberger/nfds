@@ -8,12 +8,15 @@ library(fastDummies)
 library(glmnet)
 library(rmatio)
 library(readxl)
+library(ggplot2)
 library(quadprog)
 library(mgcv)
 library(lme4)
 library(patchwork)
 
-source('easyNF_migration.R')
+#source('easyNF_migration.R')
+source('easyNF.R')
+
 source('plotNF.R')
 
 #set.vts <- c('1','3','4','5','6A','6B','7F','9V','14','18C','19A','19F','23F')
@@ -29,7 +32,9 @@ gps <-  read_excel('./Data/gladstone gps.xlsx', sheet='T21-HierBAPS')
 gps <- gps[,c("GPSC...2","HierBAPs")]
 names(gps) <-c('GPSC', 'BAPS1')
 
-d1 <- merge(d1, gps, by='BAPS1',all=T)
+gps <- unique(gps)
+
+#d1 <- merge(d1, gps, by='BAPS1',all.x=T)
 d1 <- d1[!is.na(d1$BAPS2),]
 
 G <- d1[, grep('HMPREF', names(d1))]

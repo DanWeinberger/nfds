@@ -8,19 +8,24 @@
 
 
 easyNF <- function(nf.obj    ){
-  x1b <-read_excel('./Data/gladstone gps.xlsx', sheet='T2-GPSC assignment dataset')
+  x1b <-read_excel('./Data/gladstone gps.xlsx', sheet='T2-GPSC assignment dataset', guess_max=10000)
   
-  meta1 <-read_excel('./Data/gladstone gps.xlsx')
+  meta1 <-read_excel('./Data/gladstone gps.xlsx', guess_max=14000)
   meta1.carr.pre <- merge(meta1,x1b, by='ERR' )
   #Restrict to GPSCs that were detected in pre-PCV samples
   meta1.pre <- meta1.carr.pre[ meta1.carr.pre$Vaccine_Period=='Pre-PCV', ] 
-  gps.GPSC <- meta1.pre$GPSC.x
   gps.serotype <- meta1.pre$In_Silico_Serotype
-  gps.st.gpsc.combos <- unique(cbind.data.frame(gps.GPSC, gps.serotype))
+
+  gps.GPSC <- meta1.pre$GPSC.x
+  #gps.GPSC <- paste(gps.GPSC, gps.serotype, sep='_')
   
-  sample.GPSCs=nf.obj$sample.GPSCs
+  gps.st.gpsc.combos <- unique(cbind.data.frame(gps.GPSC, gps.serotype))
+
+  #GPSC found in sample  
   sample.serotypes=nf.obj$sample.serotypes
-  #sample.serotypes.gpsc <- paste(sample.serotypes, sample.GPSCs, sep='_')
+  sample.GPSCs=nf.obj$sample.GPSCs
+
+    #sample.serotypes.gpsc <- paste(sample.serotypes, sample.GPSCs, sep='_')
   gene.mat=nf.obj$gene.mat
   pcvsts=nf.obj$set.vts
   irr=nf.obj$set.rr

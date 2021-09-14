@@ -78,7 +78,7 @@ gen.names <- names(df.nac)[grep('gene_',names(df.nac))]
 # aics <- cbind.data.frame(aics, coef1)
 # aics <- cbind.data.frame(gen.names,aics)
 # aics$Gene <- gsub('gene_','',aics$gen.names)
-# cog.ann <- readRDS('./Data/cog_annotations.rds')
+ cog.ann <- readRDS('./Data/cog_annotations.rds')
 # aics$Gene <- gsub('group','group_',aics$Gene)
 # 
 # aics <- merge(aics, cog.ann, by='Gene', all.x=T)
